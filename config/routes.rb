@@ -1,6 +1,14 @@
+# config/routes.rb
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  namespace :api do
+    namespace :v1 do
+      post '/clock_in', to: 'sleep_records#clock_in'
+      post '/clock_out', to: 'sleep_records#clock_out'
+      get '/sleep_records', to: 'sleep_records#index'
+      get '/friends_sleep_records', to: 'sleep_records#friends_sleep_records'
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+      post '/follow', to: 'users#follow'
+      post '/unfollow', to: 'users#unfollow'
+    end
+  end
 end
