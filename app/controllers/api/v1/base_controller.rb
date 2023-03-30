@@ -14,6 +14,7 @@ module Api
       end
 
       def current_user
+        # Use this on HEADER using X-User-Id
         @current_user ||= User.find_by(id: request.headers['X-User-Id'])
       end
 
