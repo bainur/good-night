@@ -9,17 +9,17 @@ module Api
         render json: @follows
       end
 
-      def show
-        render json: @follow
+      def profile
+        render json:  UserSerializer.new(@current_user), status: :ok 
       end
 
       def follow
         @follow = @current_user.follows.build(follow_params)
 
-        if @follow.save
+        if @current_user.follows.find_by_followed_user_id(follow_params[:followed_user_id]).nil? && @follow.save
           render json: @follow, status: :created
-        else
-          render json: @follow.errors, status: :unprocessable_entity
+        else # this user has follow that user
+          render json: { status: :ok, follow: @follow }
         end
       end
 

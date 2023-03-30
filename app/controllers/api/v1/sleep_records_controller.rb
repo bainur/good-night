@@ -6,13 +6,15 @@ module Api
       def clock_in
         sleep_record = @current_user.check_in(Time.current)
 
-        render json: { status: :ok, message: 'Clock in Success', sleep_record: sleep_record.as_json(except: %i[created_at updated_at]) }
+        render json: { status: :ok, message: 'Clock in Success', sleep_record: sleep_record
+          .as_json(except: %i[created_at updated_at]) }
       end
 
       def clock_out
         sleep_record = @current_user.check_out(Time.current)
 
-        render json: { status: :ok, message: 'Clock out Success', sleep_record: sleep_record.as_json(except: %i[created_at updated_at]) }
+        render json: { status: :ok, message: 'Clock out Success', sleep_record: sleep_record
+          .as_json(except: %i[created_at updated_at]) }
       end
 
       def index
@@ -23,7 +25,7 @@ module Api
 
       def friends_sleep_records
         sleep_records = @current_user.friends_sleep_records
-        render json: { sleep_records: sleep_records.as_json }
+        render json: { status: :ok, sleep_records: sleep_records.as_json(except: %i[created_at updated_at]) }
       end
     end
   end

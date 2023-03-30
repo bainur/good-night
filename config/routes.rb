@@ -7,8 +7,9 @@ Rails.application.routes.draw do
       get '/sleep_records', to: 'sleep_records#index'
       get '/friends_sleep_records', to: 'sleep_records#friends_sleep_records'
 
+      get '/profile', to: 'users#profile'
       post '/follow', to: 'users#follow'
-      post '/unfollow', to: 'users#unfollow'
+      delete '/unfollow', to: 'users#unfollow'
     end
   end
 end

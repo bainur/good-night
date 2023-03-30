@@ -1,11 +1,22 @@
+# frozen_string_literal: true
+# Class User
+
 class User < ApplicationRecord
   has_many :sleep_records, dependent: :destroy
   has_many :follows, foreign_key: :follower_id, dependent: :destroy
   has_many :followed_users, through: :follows, source: :followed_user
 
   def friends_sleep_records
-    SleepRecord.joins(user: :follows).where(follows: { followed_user_id: id })
+    friend_ids = follows.pluck(:followed_user_id)
+    sort_order = '(sleep_records.clock_out_time - sleep_records.clock_in_time) DESC'
+
+    SleepRecord.where(user_id: friend_ids)
                .where('sleep_records.clock_in_time >= ?', 1.week.ago)
+               .order(Arel.sql(sort_order))
+  end
+
+  def today_activities
+    sleep_records.order('id desc').first
   end
 
   def check_in(time)
@@ -23,6 +34,7 @@ class User < ApplicationRecord
   def check_out(time)
     sleep_record = sleep_records.today.last
     # today check in exist, just update it
+
     sleep_record.update(clock_out_time: time) if sleep_record.present? && sleep_record.clock_out_time.nil?
     sleep_record
   end
