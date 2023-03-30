@@ -3,19 +3,16 @@ module Api
     class UsersController < BaseController
       before_action :set_follow, only: [:show, :destroy]
 
-      # GET /api/v1/follows
       def index
         @follows = @current_user.follows
 
         render json: @follows
       end
 
-      # GET /api/v1/follows/1
       def show
         render json: @follow
       end
 
-      # POST /api/v1/follows
       def follow
         @follow = @current_user.follows.build(follow_params)
 
@@ -26,15 +23,15 @@ module Api
         end
       end
 
-      # DELETE /api/v1/follows/1
-      def destroy
-        @follow.destroy
+      def unfollow
+        @follow = @current_user.follows.find_by_followed_user_id(follow_params[:followed_user_id])
+        @follow&.destroy
       end
 
       private
 
       def set_follow
-        @follow = current_user.follows.find(params[:id])
+        @follow = @current_user.follows.find(params[:id])
       end
 
       def follow_params
