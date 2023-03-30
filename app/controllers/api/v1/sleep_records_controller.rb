@@ -20,12 +20,12 @@ module Api
       def index
         sleep_records = @current_user.sleep_records.order(created_at: :desc)
 
-        render json: { status: :ok, sleep_records: sleep_records.as_json(except: %i[created_at updated_at]) }
+        render json: SleepRecordSerializer.new(sleep_records),  status: :ok
       end
 
       def friends_sleep_records
         sleep_records = @current_user.friends_sleep_records
-        render json: { status: :ok, sleep_records: sleep_records.as_json(except: %i[created_at updated_at]) }
+        render json: SleepRecordSerializer.new(sleep_records),  status: :ok
       end
     end
   end

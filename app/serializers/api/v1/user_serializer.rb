@@ -4,9 +4,7 @@ class Api::V1::UserSerializer
   attributes :name, :id
   has_many :sleep_records
 
-  attributes :follows do |object|
-    object.follows
-  end
+  has_many :follows, serializer: Api::V1::FollowSerializer
 
   attribute :followers do |object|
     object.followed_users

@@ -10,16 +10,17 @@ module Api
       end
 
       def profile
-        render json:  UserSerializer.new(@current_user), status: :ok 
+        render json: UserSerializer.new(@current_user), status: :ok
       end
 
       def follow
         @follow = @current_user.follows.build(follow_params)
+        existing =  @current_user.follows.find_by_followed_user_id(follow_params[:followed_user_id])
 
-        if @current_user.follows.find_by_followed_user_id(follow_params[:followed_user_id]).nil? && @follow.save
-          render json: @follow, status: :created
+        if existing.nil? && @follow.save
+          render json: FollowSerializer.new(@follow), status: :created
         else # this user has follow that user
-          render json: { status: :ok, follow: @follow }
+          render json: FollowSerializer.new(existing), status: :ok
         end
       end
 

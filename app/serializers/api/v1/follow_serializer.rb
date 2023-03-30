@@ -1,4 +1,6 @@
 
 class Api::V1::FollowSerializer
-    attribute :follow, :followed_user
+    include JSONAPI::Serializer
+    
+    attribute :follower, :followed_user
 end
