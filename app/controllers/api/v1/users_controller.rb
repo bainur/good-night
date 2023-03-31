@@ -1,12 +1,6 @@
 module Api
   module V1
     class UsersController < BaseController
-      def index
-        @follows = @current_user.follows
-
-        render json: @follows
-      end
-
       def profile
         render json: { status: :ok }.merge(UserSerializer.new(@current_user))
       end
