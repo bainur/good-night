@@ -1,16 +1,7 @@
 # README
-## ENVIRONTMENT, Admin User
-#launchengine
-Heroku url :
-https://fast-oasis-10929.herokuapp.com/
-
-Admin user :
-admin@example.com / 86WmYwjFVF>q}@7P
-
-
 ## Prerequisites Installations
 
-- Install ruby version 2.7.1 and set it with your ruby environment manager
+- Install ruby version 3.1.2p20 and set it with your ruby environment manager
   ([more info here](https://www.ruby-lang.org/en/documentation/installation/)).
 
 - Install Postgres and start the PostgreSQL server in the foreground
