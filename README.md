@@ -1,4 +1,12 @@
 # README
+
+## Intro
+
+Hi there. kindly check this simple documentation. 
+just FYI, i made this simple app, around 3-5 hours :). 
+
+Without any rspec / features testing btw. 
+Just QA - ing my self. haha
 ## Prerequisites Installations
 
 - Install ruby version 3.1.2p20 and set it with your ruby environment manager
