@@ -4,6 +4,7 @@ class CreateSleepRecords < ActiveRecord::Migration[7.0]
       t.references :user, null: false, foreign_key: true
       t.datetime :clock_in_time
       t.datetime :clock_out_time
+      t.integer :duration_in_sec
 
       t.timestamps
     end

@@ -27,6 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_29_041115) do
     t.bigint "user_id", null: false
     t.datetime "clock_in_time"
     t.datetime "clock_out_time"
+    t.integer "duration_in_sec"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_sleep_records_on_user_id"
