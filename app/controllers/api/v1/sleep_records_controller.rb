@@ -1,34 +1,29 @@
 # app/controllers/api/v1/sleep_records_controller.rb
 module Api
   module V1
+    # Sleep Records controller
     class SleepRecordsController < BaseController
-
       def clock_in
-        sleep_record = @current_user.sleep_records.create(clock_in_time: Time.current)
+        sleep_record = @current_user.check_in(Time.current)
 
-        render json: { sleep_record: sleep_record }
+        render json: { status: :ok, message: 'Clock in Success', sleep_record: sleep_record.as_json(except: %i[created_at updated_at]) }
       end
 
       def clock_out
-        sleep_record = current_user.latest_sleep.update(clock_out_time: Time.current)
+        sleep_record = @current_user.check_out(Time.current)
 
-        render json: { sleep_record: sleep_record }
+        render json: { status: :ok, message: 'Clock out Success', sleep_record: sleep_record.as_json(except: %i[created_at updated_at]) }
       end
 
       def index
-        sleep_records = current_user.sleep_records.order(created_at: :desc)
+        sleep_records = @current_user.sleep_records.order(created_at: :desc)
 
-        render json: { sleep_records: sleep_records }
+        render json: { status: :ok, sleep_records: sleep_records.as_json(except: %i[created_at updated_at]) }
       end
 
       def friends_sleep_records
-        friends = current_user.following.pluck(:id)
-
-        sleep_records = SleepRecord.where(user_id: friends).where(created_at: 1.week.ago..Time.current)
-                                   .select('*, (clock_out - clock_in) as sleep_duration')
-                                   .order('sleep_duration desc')
-
-        render json: { sleep_records: sleep_records }
+        sleep_records = @current_user.friends_sleep_records
+        render json: { sleep_records: sleep_records.as_json }
       end
     end
   end
